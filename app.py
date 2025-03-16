@@ -34,11 +34,11 @@ def get_image_path(ski_name):
     cleaned_name = cleaned_name.replace('|', '').replace('  ', ' ').strip()
     
     # Handle special cases for our specific skis
-    if "black crows mirus cor" in cleaned_name:
+    if "black crow mirus cor" in cleaned_name or "black crows mirus cor" in cleaned_name:
         filename = "black_crows_mirus_cor"
     elif "stockli montero ar" in cleaned_name:
         filename = "stockli_montero_ar"
-    elif "m7 mantra" in cleaned_name or "völkl m7 mantra" in cleaned_name:
+    elif "volkl my mantra" in cleaned_name or "völkl my mantra" in cleaned_name:
         filename = "völkl_m7_mantra"
     else:
         # Default case: Replace spaces and special chars with underscores
@@ -79,10 +79,13 @@ def find_best_deals(search_query=None):
         
         for ski in ski_data:
             if "Black Crows Mirus Cor" in ski['ski_name']:
+                ski['ski_name'] = "2025 Black Crow Mirus Cor"  # Update name
                 mirus_cor_options.append(ski)
             elif "Stockli Montero AR" in ski['ski_name']:
+                ski['ski_name'] = "2025 Stockli Montero AR"  # Update name
                 montero_options.append(ski)
-            elif "M7 Mantra" in ski['ski_name']:
+            elif "M7 Mantra" in ski['ski_name'] or "Völkl M7 Mantra" in ski['ski_name']:
+                ski['ski_name'] = "2025 Volkl MY Mantra"  # Update name
                 mantra_options.append(ski)
         
         # Sort each list by price and get the cheapest option
@@ -103,28 +106,13 @@ def find_best_deals(search_query=None):
         # Get the local image path for this ski
         image_path = get_image_path(ski['ski_name'])
         
-        # Find the highest price for this ski model to calculate savings
-        ski_name_base = ski['ski_name'].lower().replace('2024', '').replace('2025', '').replace('2026', '').strip()
-        all_prices = [clean_price(s['current_price']) for s in ski_data if 
-                     s['ski_name'].lower().replace('2024', '').replace('2025', '').replace('2026', '').strip() == ski_name_base]
-        
-        current_price = clean_price(ski['current_price'])
-        highest_price = max(all_prices) if all_prices else current_price
-        
-        # Calculate savings
-        savings_amount = highest_price - current_price
-        savings_percentage = (savings_amount / highest_price) * 100 if highest_price > 0 else 0
-        
         formatted_results.append({
             'name': ski['ski_name'],
             'deals': [{
                 'price': ski['current_price'],
                 'store': ski['site_name'],
                 'url': ski['site_url'],
-                'image_url': url_for('static', filename=image_path),
-                'highest_price': f"${highest_price:.2f}",
-                'savings_amount': f"${savings_amount:.2f}",
-                'savings_percentage': f"{savings_percentage:.0f}%"
+                'image_url': url_for('static', filename=image_path)
             }]
         })
     
