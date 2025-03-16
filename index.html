@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SkiSniper - Redirecting...</title>
+    <meta http-equiv="refresh" content="0;url=/templates/index.html">
+    <link rel="stylesheet" href="static/css/styles.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0A0C0F;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .loading {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #BBFF00;
+            border-top: 4px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="loading">Loading SkiSniper...</div>
+        <div class="spinner"></div>
+    </div>
+    <script>
+        // Fallback in case meta refresh doesn't work
+        window.location.href = '/templates/index.html';
+    </script>
+</body>
+</html> 
